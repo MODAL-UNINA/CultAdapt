@@ -10,8 +10,8 @@ Vision-language models (VLMs) have demonstrated strong capabilities across a bro
 Create and activate the Conda environment:
 
 ```bash
-conda env create -n cultadapt -f environment.yml
-conda activate cultadapt
+conda env create -n cultadapt_env -f environment.yml
+conda activate cultadapt_env
 ```
 ## Data preparation
 

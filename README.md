@@ -37,7 +37,7 @@ python -m adapters.train_adapters \
   --output-dir trained_adapters
 ```
 
-For two-GPU training, replace `python -m` with `torchrun --standalone --nproc_per_node=2 --module` in the command above.
+For two-GPU training, replace `python -m` with `accelerate launch --multi_gpu --num_processes 2 --module adapters.train_adapters` in the command above.
 
 Extract visual features and train the router:
 

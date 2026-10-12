@@ -72,12 +72,23 @@ def normalize_samples(samples, mapping):
         owners[key] = country
         label = None
         if task == "TF":
+            label_aliases = {
+                "true": "true", "false": "false",
+                "yes": "true", "no": "false",
+            }
             label = str(item.get("correct_answer", "")).strip().lower()
-            if label not in {"true", "false"}:
-                match = re.match(r"^\s*(true|false)\b", conversations[1]["value"], re.I)
+            if label not in label_aliases:
+                match = re.match(
+                    r"^\s*(true|false|yes|no)\b",
+                    conversations[1]["value"],
+                    re.I,
+                )
                 if match is None:
-                    raise ValueError(f"Unrecognized TF answer for source ID {item.get('id')!r}")
+                    raise ValueError(
+                        f"Unrecognized TF answer for source ID {item.get('id')!r}"
+                    )
                 label = match.group(1).lower()
+            label = label_aliases[label]
         # Use the portable normalized path for the ID, canonical path for overlap.
         identity = [image, task, conversations, item.get("options"),
                     label if task == "TF" else item.get("correct_answer")]

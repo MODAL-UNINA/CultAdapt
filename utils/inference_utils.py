@@ -32,9 +32,6 @@ def references(value):
         if isinstance(value, str):
             value = [value]
 
-    if not isinstance(value, (list, tuple)) or not value:
-        raise ValueError('Missing reference answers')
-
     if any(v is not None and not isinstance(v, str) for v in value):
         raise ValueError('Reference answers must be strings or None')
 

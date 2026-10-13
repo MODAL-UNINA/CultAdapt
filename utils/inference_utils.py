@@ -31,11 +31,19 @@ def references(value):
                 pass
         if isinstance(value, str):
             value = [value]
+
     if not isinstance(value, (list, tuple)) or not value:
         raise ValueError('Missing reference answers')
-    if any(not isinstance(v, str) or not v.strip() for v in value):
-        raise ValueError('References must be nonempty strings')
-    return list(dict.fromkeys(v.strip() for v in value))
+
+    if any(v is not None and not isinstance(v, str) for v in value):
+        raise ValueError('Reference answers must be strings or None')
+
+    cleaned = list(dict.fromkeys(
+        v.strip() for v in value
+        if v is not None and v.strip()
+    ))
+
+    return cleaned
 
 
 def cvqa_record(item, mode):
